@@ -4,6 +4,7 @@ import {Scene, Router, Actions } from 'react-native-router-flux';
 
 import SceneOne from './src/components/SceneOne';
 import SceneTwo from './src/components/SceneTwo';
+import SceneThree from './src/components/SceneThree';
 
 class MainScene extends React.Component {
   render() {
@@ -20,15 +21,19 @@ class MainScene extends React.Component {
           <Text style={{ color: 'white' }}>Go to SceneOne</Text>
         </TouchableOpacity>
         <TouchableOpacity
-          onPress={Actions.two}
+          onPress={Actions.tabbar}
           style={{ backgroundColor: 'blue', margin: 20, padding: 20 }}
         >
-          <Text style={{ color: 'white' }}>Go to SceneTwo</Text>
+          <Text style={{ color: 'white' }}>Go to Scene with Tab</Text>
         </TouchableOpacity>
       </View>
     );
   }
 }
+
+const TabIcon = ({ selected, title }) => (
+  <Text style={{ color: selected ? 'teal': 'black'}}>{title}</Text>
+);
 
 export default class App extends React.Component {
   render() {
@@ -37,7 +42,14 @@ export default class App extends React.Component {
         <Scene key="root">
           <Scene key="main" component={MainScene} title="Main"/>
           <Scene key="one" component={SceneOne} title="One"/>
-          <Scene key="two" component={SceneTwo} title="Two"/>
+          <Scene key="tabbar" tabs tabBarStyle={{ backgroundColor: 'white'}}>
+            <Scene key="innerone" title="tabOne" icon={TabIcon}>
+              <Scene key="two" component={SceneTwo} title="Two Inner" />
+            </Scene>
+            <Scene key="innertwo" title="tabTwo" icon={TabIcon}>
+              <Scene key="three" component={SceneThree} title="Two Inner" />
+            </Scene>
+          </Scene>
         </Scene>
       </Router>
     );
