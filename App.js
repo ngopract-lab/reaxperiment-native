@@ -5,6 +5,7 @@ import {Scene, Router, Actions } from 'react-native-router-flux';
 import SceneOne from './src/components/SceneOne';
 import SceneTwo from './src/components/SceneTwo';
 import SceneThree from './src/components/SceneThree';
+import SceneFour from './src/components/SceneFour';
 
 class MainScene extends React.Component {
   render() {
@@ -14,6 +15,12 @@ class MainScene extends React.Component {
         <Text>up App.js to start working on your wowza!</Text>
         <Text>Changes you make will automatically reload.</Text>
         <Text>Shake your phone to open the developer menu.</Text>
+        <TouchableOpacity
+          onPress={Actions.modal}
+          style={{ backgroundColor: 'orange', margin: 20, padding: 20 }}
+        >
+          <Text style={{ color: 'white' }}>OPEN MODAL</Text>
+        </TouchableOpacity>
         <TouchableOpacity
           onPress={Actions.one}
           style={{ backgroundColor: 'teal', margin: 20, padding: 20 }}
@@ -35,21 +42,40 @@ const TabIcon = ({ selected, title }) => (
   <Text style={{ color: selected ? 'teal': 'black'}}>{title}</Text>
 );
 
+const ModalScreen = () => (
+  <View style={{
+      flex: 1,
+      backgroundColor: 'orange',
+      justifyContent: 'center',
+      alignItems: 'center'
+    }}>
+    <TouchableOpacity style={{ backgroundColor: 'white', padding: 20 }}>
+      <Text>
+        This is a Modal
+      </Text>
+    </TouchableOpacity>
+  </View>
+);
+
 export default class App extends React.Component {
   render() {
     return (
-      <Router>
+      <Router navigationBarStyle={{paddingTop: 15, backgroundColor: '#eee', borderBottomWidth: 0 }}>
         <Scene key="root">
           <Scene key="main" component={MainScene} title="Main"/>
           <Scene key="one" component={SceneOne} title="One"/>
           <Scene key="tabbar" tabs tabBarStyle={{ backgroundColor: 'white'}}>
             <Scene key="innerone" title="tabOne" icon={TabIcon}>
-              <Scene key="two" component={SceneTwo} title="Two Inner" />
+              <Scene key="two" component={SceneTwo} title="One Inner"/>
             </Scene>
             <Scene key="innertwo" title="tabTwo" icon={TabIcon}>
-              <Scene key="three" component={SceneThree} title="Two Inner" />
+              <Scene key="three" component={SceneThree} title="Two Inner"/>
+            </Scene>
+            <Scene key="innerthree" title="tabThree" icon={TabIcon}>
+              <Scene key="four" component={SceneFour} title="Three Inner"/>
             </Scene>
           </Scene>
+          <Scene key="modal" component={ModalScreen}/>
         </Scene>
       </Router>
     );
